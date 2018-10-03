@@ -136,9 +136,11 @@ AUTH_USER_MODEL = 'users.UserProfile'
 
 STATIC_URL = '/static/'
 # 公共静态文件 STATICFILES_DIRS　这一个元组，里面放置开发时静态文件自动搜寻的目录.
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static'),
+# )
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
