@@ -27,7 +27,7 @@ SECRET_KEY = 'nf+sf_aas*3k*b)7(3u26eim=bb638pldi^049d6i)tpco(pjh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['119.23.222.136', 'www.d4vidz.top', 'd4vidz.top']
 
 
 # Application definition
