@@ -1,0 +1,189 @@
+{% load staticfiles %}
+{% load blog_tags %}
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>ZZY个人博客</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/monokai_sublime.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ghost.css' %}"/>
+    <meta name="referrer" content="origin" />
+    <style>
+        #header{
+        background-image: url("/media/bay-boat-city-134062.jpg");
+        width: 100%;
+        height: 300px;
+    }
+    </style>
+</head>
+<body class="home-template">
+<!-- start header -->
+<header class="main-header" id="header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <img src="/media/bay-boat-city-134062.jpg" alt="" class="hide">
+            </div>
+        </div>
+    </div>
+</header>
+<!-- end header -->
+
+<!-- start navigation -->
+<nav class="main-navigation">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="navbar-header">
+                <span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu">
+                <span class="sr-only">Toggle navigation</span>
+                <i class="fa fa-bars"></i>
+                </span>
+            </div>
+    <div class="collapse navbar-collapse" id="main-menu">
+    <ul class="menu">
+    <li  role="presentation"><a href="{% url 'blog:index' %}"><h4>首页</h4></a></li>
+    <li  role="presentation"><a href="{% url 'blog:blog_list' %}"><h4>博客</h4></a></li>
+    <li  role="presentation"><a href="#"><h4>技术</h4></a></li>
+    <li  role="presentation"><a href="#"><h4>杂谈</h4></a></li>
+    <li  role="presentation"><a href="#"><h4>关于</h4></a></li>
+    </ul>
+    </div>
+            </div>
+        </div>
+</div>
+</nav>
+<!-- end navigation -->
+
+<!-- start site's main content area -->
+<section class="content-wrap">
+    <div class="container">
+        <div class="row">
+            <main class="col-md-8 main-content">
+                {% block main %}
+                {% endblock %}
+            </main>
+
+    <aside class="col-md-4 sidebar">
+    {% block toc %}
+    {% endblock %}
+<!-- start widget -->
+<!-- end widget -->
+            <!-- start tag cloud widget -->
+<div class="widget">
+	<h4 class="title">最新文章</h4>
+	<div class="content">
+    {% recent_blogs as blogs %}
+        {% for blog in blogs %}
+            <p><a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a></p>
+            {% empty %}
+            <p>no blog now!!</p>
+        {% endfor %}
+	</div>
+</div>
+<!-- end tag cloud widget -->
+            <!-- start widget -->
+<div class="widget">
+	<h4 class="title">归档</h4>
+	<div class="content download">
+    {% archives as archive_list %}
+        {% for date in archive_list %}
+            <p>
+                <a href="{% url 'blog:archives' date.year date.month %}">{{ date.year }} 年 {{ date.month }} 月</a>
+            </p>
+        {% empty %}
+            暂无归档！
+        {% endfor %}
+	</div>
+</div>
+<!-- end widget -->
+
+            <!-- start tag cloud widget -->
+<div class="widget">
+	<h4 class="title">标签云</h4>
+	<div class="content tag-cloud">
+    {% tags as tag_list %}
+        {% for tag in tag_list %}
+        <a href="{% url 'blog:tag' tag.name %}">{{ tag.name }}</a>
+		{% empty %}
+        <p>no tags now!!!</p>
+        {% endfor %}
+	</div>
+</div>
+
+<div class="widget">
+    <h4 class="title">RSS</h4>
+    <div class="content tag-cloud">
+        <a href="{% url 'rss' %}">RSS</a>
+    </div>
+</div>
+<!-- end tag cloud widget -->
+            <!-- start widget -->
+<!-- end widget -->
+
+<!-- start widget -->
+<!-- end widget --></aside>
+
+        </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="widget">
+                        <h4 class="title">学习链接</h4>
+                        <div class="content tag-cloud friend-links">
+                            <a href="http://www.bootcss.com" title="Bootstrap中文网" onclick="_hmt.push(['_trackEvent', 'link', 'click', 'Bootstrap中文网'])" target="_blank">Bootstrap中文网</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="widget">
+                        <h4 class="title">所用技术</h4>
+                        <div class="content tag-cloud">
+                            <a href="#">...</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="widget">
+                        <h4 class="title">部署平台</h4>
+                        <div class="content tag-cloud friend-links">
+                            <a href="http://www.aliyun.com/" title="阿里云" onclick="_hmt.push(['_trackEvent', 'link', 'click', 'aliyun'])" target="_blank">阿里云</a>
+                        </div>
+                </div></div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <span><a href="http://www.ghostchina.com/">模板来自Ghost中文网</a></span>|
+                    <span>修改人：Aeiou</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="#" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.fitvids.min.js' %}"></script>
+    <script src="{% static 'js/ghost.js' %}"></script>
+</body>
+</html>
