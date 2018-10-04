@@ -15,10 +15,9 @@ from post.models import Blog
 
 def index(request):
     blog_list = Blog.objects.all()
-    per_page = 5
     page_num = request.GET.get('page', 1)
     data = {}
-    paginate_queryset(blog_list, per_page, page_num, data)
+    paginate_queryset(blog_list, page_num, data)
     return render(request, 'blog/list.html', context=data)
 
 
@@ -56,10 +55,10 @@ def archives(request, year, month):
     blog_list = Blog.objects.filter(
         ctime__year=year, ctime__month=month
     )
-    per_page = 10
+    per_page = 5
     page_num = request.GET.get('page', 1)
     data = {}
-    paginate_queryset(blog_list, per_page, page_num, data)
+    paginate_queryset(blog_list, page_num, data)
     return render(request, 'blog/list.html', context=data)
 
 
@@ -71,14 +70,13 @@ def tag_blog(request, tag):
     :return:
     """
     blog_list = Blog.objects.filter(tag__name=tag)
-    per_page = 10
     page_num = request.GET.get('page', 1)
     data = {}
-    paginate_queryset(blog_list, per_page, page_num, data)
+    paginate_queryset(blog_list, page_num, data)
     return render(request, 'blog/list.html', context=data)
 
 
-def paginate_queryset(queryset, per_page, page_num, data):
+def paginate_queryset(queryset, page_num, data, per_page=5):
     # there is a paginator for paginate result
     paginator = Paginator(queryset, per_page)
     # notify page and make the result of this page
