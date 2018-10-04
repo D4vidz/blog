@@ -15,7 +15,7 @@ from post.models import Blog
 
 def index(request):
     blog_list = Blog.objects.all()
-    per_page = 10
+    per_page = 5
     page_num = request.GET.get('page', 1)
     data = {}
     paginate_queryset(blog_list, per_page, page_num, data)
