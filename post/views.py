@@ -9,6 +9,7 @@ from django.shortcuts import render
 from django.utils.text import slugify
 
 from post.models import Blog
+from blog.settings import logger
 
 # Create your views here.
 
@@ -23,6 +24,7 @@ def index(request):
 
 def detail(request, blog_id):
     blog = Blog.objects.get(id=blog_id)
+    logger.info('文章：%s被访问' % blog.title)
     blog.increase_views()
 
     md = markdown.Markdown(extensions=[
