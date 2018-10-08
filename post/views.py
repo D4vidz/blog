@@ -24,7 +24,6 @@ def index(request):
 
 def detail(request, blog_id):
     blog = Blog.objects.get(id=blog_id)
-    logger.info('文章：%s被访问' % blog.title)
     blog.increase_views()
 
     md = markdown.Markdown(extensions=[

@@ -28,7 +28,7 @@ SECRET_KEY = 'nf+sf_aas*3k*b)7(3u26eim=bb638pldi^049d6i)tpco(pjh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['119.23.222.136', 'www.d4vidz.top', 'd4vidz.top']
+ALLOWED_HOSTS = ['119.23.222.136', 'www.d4vidz.top', 'd4vidz.top', '127.0.0.1']
 
 
 # Application definition
@@ -149,71 +149,44 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # 日志配置
 logger = logging.getLogger(__name__)
 LOGGING = {
-    'version': 1.0.0,
-    'disable_exisiting_loggers': False,
-    'filter': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse',
-        },
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
-        },
-    },
-
-    'formatter': {
-        'verbose': {
-            format'%(asctime)s [%(threadName)s:%(thread)d] [%(name)s:%(lineno)d] ' \
-             '[%(module)s:%(funcName)s] [%(levelname)s] - %(message)s'
-        },
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+       'standard': {
+            'format': '%(asctime)s|%(threadName)s|%(module)s:%(funcName)s-%(lineno)d|%(levelname)s|%(message)s'
+            },  #日志格式
         'simple': {
-            '%(asctime)s %(levelname)s|%(message)s'
-        }
+            'format': '%(asctime)s|%(levelname)s|%(message)s'
+        },
     },
     'handlers': {
         'null': {
             'level': 'DEBUG',
-            'class': 'logging.NullHanlder',
-        },
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
+            'class': 'logging.NullHandler',
         },
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
+            'formatter': 'simple'
         },
-        'logfile': {
+        'default': {
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
-            'formatter': 'verbose',
             'filename': 'logs/run.log',
-            'encoding': 'utf-8'
-            'when': 'midnight'
+            'formatter': 'standard',
         },
-    }
-    
+    },
     'loggers': {
         '': {
-            'handlers': ['console', 'logfile'],
+            'handlers': ['default'],
             'level': 'DEBUG',
-            'propagate': False
+            'propagate': True
         },
-        'django': {
-            'handlers': ['null'],
+        'django.server': {
+            'handlers': ['default', 'console'],
             'level': 'DEBUG',
             'propagate': False,
-        }
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': False,
-        }
-        'django.security': {
-            'handlers': ['mail_amdins'],
-            'level': 'ERROR',
-            'propagate': False
-        }
+        },
     }
 }
+
